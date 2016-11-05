@@ -27,6 +27,25 @@ static ssize_t times_show(struct kobject *kobj, struct kobj_attribute *attr, cha
 	return sprintf(buf, "%lu\n", times);
 }
 
+static ssize_t times_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count) {
+	if (kstrtoul(buf, 10, &times) == -EINVAL) {
+		return -EINVAL;
+	}
+
+	if (timer_exists) {
+		del_timer(&timer);
+	}
+
+	timer_exists = 1;
+	timer.data = times;
+	timer.function = repeat;
+	timer.expires = jiffies + DELAY * HZ;
+
+	add_timer(&timer);
+
+	return count;
+}
+
 static void repeat(unsigned long arg) {
 	unsigned long i = 0;
 
