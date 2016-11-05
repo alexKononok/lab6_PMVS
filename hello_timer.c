@@ -22,3 +22,20 @@ static struct kobj_attribute times_attrb = __ATTR(interval, 0664, times_show, ti
 static struct kobject *times_obj = NULL;
 
 static struct timer_list timer;
+
+static int __init timer_init() {
+
+	init_timer_on_stack(&timer);
+
+	times_obj = kobject_create_and_add("timer", NULL);
+	if (!times_obj) {
+		return -ENOMEM;
+	}
+
+	if (sysfs_create_file(times_obj, &times_attrb.attr)) {
+		timer_exit();
+		return -EINVAL;
+	}
+
+	return 0;
+}
