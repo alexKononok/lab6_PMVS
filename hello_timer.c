@@ -39,3 +39,16 @@ static int __init timer_init() {
 
 	return 0;
 }
+
+static void timer_exit() {
+	if (timer_exists) {
+		del_timer(&timer);
+	}
+
+	if (times_obj) {
+		kobject_put(times_obj);
+	}
+}
+
+module_init(timer_init);
+module_exit(timer_exit);
