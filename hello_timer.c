@@ -17,3 +17,8 @@ static ssize_t times_store(struct kobject *, struct kobj_attribute *, const char
 
 static void repeat(unsigned long);
 
+static struct kobj_attribute times_attrb = __ATTR(interval, 0664, times_show, times_store);
+
+static struct kobject *times_obj = NULL;
+
+static struct timer_list timer;
