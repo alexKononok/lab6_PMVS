@@ -23,6 +23,10 @@ static struct kobject *times_obj = NULL;
 
 static struct timer_list timer;
 
+static ssize_t times_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf) {
+	return sprintf(buf, "%lu\n", times);
+}
+
 static void repeat(unsigned long arg) {
 	unsigned long i = 0;
 
