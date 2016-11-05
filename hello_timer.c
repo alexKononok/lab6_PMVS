@@ -23,6 +23,22 @@ static struct kobject *times_obj = NULL;
 
 static struct timer_list timer;
 
+static void repeat(unsigned long arg) {
+	unsigned long i = 0;
+
+	if (!arg) {
+		return;
+	}
+
+	for (i = 0; i < arg; ++i) {
+		printk(KERN_INFO "%s\n", TEXT);
+	}
+
+	timer.expires = jiffies + DELAY * HZ;
+
+	add_timer(&timer);
+}
+
 static int __init timer_init() {
 
 	init_timer_on_stack(&timer);
