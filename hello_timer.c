@@ -91,3 +91,6 @@ static void timer_exit() {
 
 module_init(timer_init);
 module_exit(timer_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Alexander Kononok");
