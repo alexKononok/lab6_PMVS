@@ -23,11 +23,14 @@ static struct kobject *times_obj = NULL;
 
 static struct timer_list timer;
 
-static ssize_t times_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf) {
+static ssize_t times_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
+{
 	return sprintf(buf, "%lu\n", times);
 }
 
-static ssize_t times_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count) {
+static ssize_t times_store(struct kobject *kobj, struct kobj_attribute *attr, 
+				const char *buf, size_t count) 
+{
 	if (kstrtoul(buf, 10, &times) == -EINVAL) {
 		return -EINVAL;
 	}
@@ -46,7 +49,8 @@ static ssize_t times_store(struct kobject *kobj, struct kobj_attribute *attr, co
 	return count;
 }
 
-static void repeat(unsigned long arg) {
+static void repeat(unsigned long arg) 
+{
 	unsigned long i = 0;
 
 	if (!arg) {
@@ -62,8 +66,8 @@ static void repeat(unsigned long arg) {
 	add_timer(&timer);
 }
 
-static int __init timer_init() {
-
+static int __init timer_init() 
+{
 	init_timer_on_stack(&timer);
 
 	times_obj = kobject_create_and_add("timer", NULL);
@@ -79,7 +83,8 @@ static int __init timer_init() {
 	return 0;
 }
 
-static void timer_exit() {
+static void timer_exit() 
+{
 	if (timer_exists) {
 		del_timer(&timer);
 	}
