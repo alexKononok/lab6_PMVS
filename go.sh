@@ -8,4 +8,4 @@ echo "3" > /sys/timer/interval
 sleep 6
 echo 0 > /sys/timer/interval
 
-sudo rmmod hello_timer
+#sudo rmmod hello_timer
